@@ -16,6 +16,9 @@ class LogMod {
       if (path.extname(file) === '.gz') {
         logger.info('删除日志文件', file);
         fs.unlinkSync(path.join(__dirname, '../../logs', file));
+      } else if (path.extname(file) === '.log') {
+        logger.info('清空日志文件', file);
+        fs.writeFileSync(path.join(__dirname, '../../logs', file), '');
       }
     }
     return '删除日志文件成功, 详细情况查看日志';
