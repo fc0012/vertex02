@@ -414,6 +414,28 @@ function getDefaultRuleDefinitions () {
   }
   return false;
 }`
+    },
+    {
+      alias: '等待删除',
+      type: 'javascript',
+      priority: 0,
+      fitTime: '',
+      deleteNum: 1,
+      pause: false,
+      onlyDeleteTorrent: false,
+      limitSpeed: '',
+      code: `(maindata, torrent) => {
+  const categoryList = ["keep","KEEP"];
+  const stateList = ["queuedUP", "queuedDL", "stalledUP", "stalledDL"];
+  const { state, category } = torrent;
+  if (categoryList.indexOf(category) !== -1) {
+    return false;
+  }
+  if (stateList.indexOf(state) !== -1) {
+    return true;
+  }
+  return false;
+}`
     }
   ];
 }
