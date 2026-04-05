@@ -22,12 +22,12 @@ class LogMod {
   clear () {
     const logDir = path.join(__dirname, '../../logs');
     if (!fs.existsSync(logDir)) return '日志目录不存在';
-    
+
     const files = fs.readdirSync(logDir);
     for (const file of files) {
       const ext = path.extname(file);
       const filePath = path.join(logDir, file);
-      
+
       if (ext === '.gz') {
         logger.info('删除日志文件', file);
         fs.unlinkSync(filePath);
