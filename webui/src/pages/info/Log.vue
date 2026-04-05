@@ -32,6 +32,7 @@
         <a-form-item
           :wrapperCol="isMobile() ? { span:24 } : { span: 21, offset: 3 }">
           <a-button size="small" type="primary" @click="getLog">查询</a-button>
+          <a-button size="small" type="danger" @click="clearLog" style="margin-left: 12px">删除日志</a-button>
         </a-form-item>
         <a-form-item
           :wrapperCol="isMobile() ? { span:24 } : { span: 21, offset: 3 }">
@@ -70,6 +71,19 @@ export default {
         this.log = res.data;
         this.log = res ? '[202' + res.data.split('[202').reverse().join('[202') : '';
         this.log = this.log.replace(new RegExp(`\\[${this.$moment().format('YYYY')}-`, 'g'), '[').replace(/\[[^\d]*? console\] \d*/g, '').replace(/\[202/g, '');
+      } catch (e) {
+        await this.$message().error(e.message);
+      }
+    },
+    async clearLog () {
+      try {
+        const res = await this.$api().log.clear();
+        if (res.success) {
+          this.$message().success(res.message);
+          this.getLog();
+        } else {
+          this.$message().error(res.message);
+        }
       } catch (e) {
         await this.$message().error(e.message);
       }
